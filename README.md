@@ -1,7 +1,7 @@
 dynets 
 ======
 
-![Example Output](example.jpg)
+![Example Output](private/example.jpg)
 
 A pipeline for exploring time evolving M/EEG networks, based on the paper _Measurement of dynamic task related functional networks using MEG (O'Neill et al; NeuroImage 2018)_ https://doi.org/10.1016/j.neuroimage.2016.08.061
 
