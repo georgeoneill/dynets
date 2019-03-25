@@ -65,8 +65,16 @@ cfg.data        = cmat_list;
 
 results         = go_decomposeConnectome(cfg);
 
-%% View the results!
+%% Run group significance test
 
+cfg                     = [];
+cfg.p                   = 0.05;
+cfg.bonferroni_factor   = 160; % 2 tails x 10 ICs x 8 DOFs;
+
+perms           = go_testNetworks(cfg,results); 
+
+%% View the results!
+close all
 cfg             = [];
-cfg.threshold   = 0.75;
-go_viewNetworkComponents(cfg,results);
+cfg.threshold   = 0.6;
+go_viewNetworkComponents(cfg,results,perms);

@@ -42,6 +42,9 @@ for ii = 1:n_subs
         cmat_sub = cat(3,cmat_sub,tmp);
     end   
     
+    % Do a DC correction on each connection
+    cmat_sub = cmat_sub-repmat(mean(cmat_sub,3),[1 1 length(cmat_sub)]);
+    
     % flatten tensor into 2.5d (as the machine learning kids call it)
     cmat_2d = reshape(cmat_sub,78*78,length(cmat.time)*cmat.n_trials);
     % as each slice of the tensor is symmetric, remove redundant data to
