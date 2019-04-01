@@ -9,7 +9,7 @@ opt.window.size     = ft_getopt(opt.window, 'size', 6);
 opt.window.step     = ft_getopt(opt.window, 'step', 1);
 opt.bpfreq          = ft_getopt(opt, 'bpfreq', data.cfg.bpfreq);
 opt.trial_legnth    = ft_getopt(opt, 'trial_legnth', ...
-    data.cfg.trialdef.prestim + data.cfg.trialdef.prestim);
+    data.cfg.trialdef.prestim + data.cfg.trialdef.poststim);
 
 % % If refiltering of the data is required try this here
 % if sum(opt.bpfreq == data.cfg.bpfreq)~=2
