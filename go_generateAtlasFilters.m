@@ -106,10 +106,15 @@ cfg.keeptrials          = 'yes';
 cfg.vartrllength        = 2;
 timelock                = ft_timelockanalysis(cfg,data);
 
+ntrials = length(data.trial);
+sz = size(timelock.cov);
+loc = find(sz==ntrials);
+
+
 % We want to force the covariance matrix to be 100 for some heavy blurring,
 % so lets work out what lambda needs to be if mu=0.01.
-tmp = squeeze(mean(timelock.cov));
-lambda = 0.05*max(svd(tmp)) - min(svd(tmp));
+tmp = squeeze(mean(timelock.cov,loc)); % ensures its averaged across repeats
+lambda = 0.01*max(svd(tmp)) - min(svd(tmp));
 
 %% Generate Beamformer weights
 
