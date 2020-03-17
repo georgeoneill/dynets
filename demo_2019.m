@@ -5,19 +5,19 @@ clear variables
 tmp = which('ft_defaults');
 if isempty(tmp)
     % change the below line to wherever your copy of fieldtrip resides
-    addpath /net/geraint/data_local/george/toolboxes/fieldtrip/;
+    addpath /path/to/fieldtrip/distribution
     ft_defaults
 end
 
-subject         = { '001'; '002' ; '003' ; '004' ; '005'};
+subject         = {'001' ; '002' ; '003' ; '004' ; '005'};
 
 for sub_ind = 1:5
     
-    files.base      = ['/data_local/george/self_paced/' subject{sub_ind} '/'];
-    files.data      = [files.base '/' subject{sub_ind} '_tap_600.ds'];
-    files.mri       = [files.base '/' subject{sub_ind} '_crg.mri'];
+    files.base      = ['C:\\Users\goneill\data\' subject{sub_ind}];
+    files.data      = [files.base '\' subject{sub_ind} '_tap_600.ds'];
+    files.mri       = [files.base '\' subject{sub_ind} '_crg.mri'];
     
-    if exist([files.base '/demo.mat'])
+    if ~exist([files.base '/demo.mat'])
         
         % Import data, recut trials to +/- 15 seconds, filter between 4-30 Hz
         % the above cutting times are for the self paced data used in the
@@ -69,6 +69,7 @@ results         = go_decomposeConnectome(cfg);
 
 cfg                     = [];
 cfg.p                   = 0.05;
+cfg.test                = 'time'; % switch between 'time'/1 or 'flip'/2, defaults to flip test as it more conservative test.
 cfg.bonferroni_factor   = 160; % 2 tails x 10 ICs x 8 DOFs;
 
 perms           = go_testNetworks(cfg,results); 

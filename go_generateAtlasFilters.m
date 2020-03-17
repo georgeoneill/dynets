@@ -8,13 +8,12 @@ tmp = which('ft_defaults');
 if isempty(tmp)
     error('Fieldtrip path cannot be automatically found :(');
 else
-        slsh = strfind(tmp,'/');
-        files.ftpath = tmp(1:slsh(end));
+    files.ftpath = [fileparts(tmp) filesep];
 end
 
 %% MRI import / head model preparation
 
-% import 
+% import
 mri             = ft_read_mri(files.mri);
 % segment
 cfg             = [];
@@ -35,12 +34,12 @@ cfg             = [];
 cfg.vol         = mnivol;
 cfg.grid.resolution     = 0.4;
 cfg.grid.unit           = 'cm';
-cfg.inwardshift = -1; 
-mnigrid            = ft_prepare_sourcemodel(cfg);  
+cfg.inwardshift = -1;
+mnigrid            = ft_prepare_sourcemodel(cfg);
 
 %% Atlas masking of source space
 atlas = ft_read_atlas([files.ftpath 'template/atlas/aal/ROI_MNI_V4.nii'])
-    
+
 atlas           = ft_read_atlas([files.ftpath 'template/atlas/aal/ROI_MNI_V4.nii']);
 atlas           = ft_convert_units(atlas,'cm');
 
@@ -79,9 +78,9 @@ subgrid             = ft_prepare_sourcemodel(cfg);
 %% Calculate forward model
 % find gradiometer information
 if ~exist('hdr')
-    try 
+    try
         hdr = data.hdr;
-    catch 
+    catch
         hdr = ft_read_header(files.data);
     end
 end
@@ -93,7 +92,7 @@ cfg.vol         = subvol;
 cfg.grid        = subgrid;
 cfg.channel     = {'MEG'};
 cfg.normalise   = 'yes';
-cfg.rankreduce  = 2; 
+cfg.rankreduce  = 2;
 lf              = ft_prepare_leadfield(cfg);   % Leads
 
 
